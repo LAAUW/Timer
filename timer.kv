@@ -1,0 +1,45 @@
+WindowManager:
+    MainWindow:
+    ShutdownWindow:
+
+
+<MainWindow>:
+    name: "main"
+    minutes: minutes
+
+    GridLayout:
+        cols: 1
+        Label: 
+            text: "Welcome please choose in how many minutes you would like to shutdown your computer "
+
+        GridLayout:
+            cols:2
+
+            Label:
+                text: "Minutes :"
+            TextInput:
+                input_filter: "int"
+                id: minutes
+                multiline : False
+        
+        Button:
+            text: "Shutdown"
+            on_release: 
+                app.root.current= "shutdown" if minutes.text != "" else "main"
+                root.validateMinutes()
+                root.manager.transition.direction = "left"
+
+<ShutdownWindow>:
+    name: "shutdown"
+    GridLayout:
+        cols: 2
+
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current= "main"
+                root.manager.transition.direction = "right"
+        Button:
+            text: "Start shutdown"
+            on_release:
+                root.shutdown()
